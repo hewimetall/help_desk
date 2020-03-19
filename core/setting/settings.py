@@ -122,5 +122,5 @@ MEDIA_URL = '/media/'
 # for form boostrap
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-# AUTH_USER_MODEL = 'autch.CustomUser'
-# LOGIN_URL = '/autch/login'
+AUTH_USER_MODEL = 'Base.CustomUser'
+LOGIN_URL = '/login'
