@@ -1,0 +1,36 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta content="" name="description">
+    <meta content="" name="author">
+    <link href="/static/" rel="icon">
+
+    <title>Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/label/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/login/login.css' %}" rel="stylesheet">
+
+    {% block extraCss %}
+    {% endblock %}
+</head>
+{% block content %}
+
+{% endblock %}
+<body class="text-center">
+  <div class="alert alert-success" role="alert">
+  <strong>Пароль для входа: </strong> test_password_123
+</div>
+
+<form action="{% url 'login' %}" class="form-signin" method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input class="btn btn-lg btn-primary btn-block" type="submit" value="Войти">
+    <input name="next" type="hidden" value="{{ next }}">
+</form>
+</html>

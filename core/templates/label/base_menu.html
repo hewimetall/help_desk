@@ -1,0 +1,91 @@
+{% load static %}
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>
+            {% block title %}
+                {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+            {% endblock %}
+            {% block title_suffix %}
+                {% with self.get_site.site_name as site_name %}
+                    {% if site_name %}- {{ site_name }}{% endif %}
+                {% endwith %}
+            {% endblock %}
+        </title>
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/label/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/label/dashboard.css' %}" rel="stylesheet">
+    <link href="{% static 'css/label/menu.css' %}" rel="stylesheet">
+
+    {% block extraCss %}
+    {% endblock %}
+</head>
+
+<body>
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#"></a>
+
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href='{% url "ticketForm_create" %}'>
+                            <span data-feather="layers"></span>
+                            Создать Заявку
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashBourdPage' %}">
+                        <span data-feather="layers"></span>
+                        Групповые заявки
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a  class="nav-link" href="{% url 'ManegerList' %}">
+                        <span data-feather="layers"></span>
+                        Заявки для вас
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a  class="nav-link" href="{% url 'UserList'  %}">
+                        <span data-feather="layers"></span>
+                        Ваши заявки
+                        </a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span data-feather="layers"></span>
+                            Настройки(Профиль)
+                        </a>
+                    </li> -->
+                </ul>
+
+
+            </div>
+        </nav>
+        {% block content %}
+        {% endblock %}
+
+    </div>
+</div>
+
+{% block contentJs %}
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+Django>=3.0,<3.1
+django-crispy-forms==1.8.1
+django-cleanup==4.0.0
+
+# django-extensions==2.2.6
+# pygraphviz==1.5 for make diogramm 
+# psycopg2-binary 

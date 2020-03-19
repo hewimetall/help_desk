@@ -1,0 +1,5 @@
+#messages{
+  overflow-y: scroll;
+  max-height: 200px;
+  background:#fff;
+}

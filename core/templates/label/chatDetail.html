@@ -1,0 +1,38 @@
+{% extends   "label/base_menu.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block extraCss %}
+<link href="{% static 'label/css/chatbox.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+
+<main class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" role="main">
+    <div class="row">
+        <div class="col-12" id="apps_chat">
+            <div class="container"  >
+                <div id="messages" >
+                    <chat-messenge
+                            v-bind:key="m.id"
+                            v-bind:m="m"
+                            v-for="m in info">
+                    </chat-messenge>
+                </div>
+            </div>
+            <hr>
+            <form id="form_app" @submit="formSubmit" action="{% url 'ChatUserUpdate' chat.pk %}" method="post">
+                {% crispy form  %}
+            </form>
+            </div>
+    </div>
+    {% endblock %}
+
+    {% block contentJs %}
+    <!-- development version, includes helpful console warnings -->
+    <script src="{% static 'label/js/vue.js' %}"></script>
+    <script src="{% static 'label/js/axios.min.js' %}"></script>
+    <script src="{% static 'label/js/chat.js' %}"></script>
+
+    {% endblock %}
