@@ -24,7 +24,6 @@
                 <th>заголовок</th>
                 <th>автор</th>
                 <th>менеджер</th>
-                <th>приоритет</th>
                 <th>статус</th>
                 <th></th>
             </tr>
@@ -38,9 +37,8 @@
                 <td>{{ i.title }}</td>
                 <td>{{ i.autors }}</td>
                 <td>{{ i.maneger }}</td>
-                <td>{{ i.getPriority }}</td>
                 <td>{{ i.getStatus }}</td>
-                <td><a href="{% url 'ticketDetail' i.pk %}">Перейти</a></td>
+                <td><a href="{% url 'ticket_detail' i.pk %}">Перейти</a></td>
             </tr>
             {% endfor %}
             </tbody>

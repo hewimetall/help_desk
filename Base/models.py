@@ -40,13 +40,14 @@ class TicketBD(AbstractTicketBD):
     objects = TicketBDManeger()
 
     autors = models.ForeignKey(CustomUser, related_name='autorsCr', on_delete=models.DO_NOTHING,
-                               verbose_name="Автор обращения")  # Автор обращения
+                               verbose_name="Автор обращения",null=True)  # Автор обращения
     maneger = models.ForeignKey(CustomUser, related_name='manager_aCr', on_delete=models.DO_NOTHING, blank=True,
                                 null=True, verbose_name="Ответственный")  # Ответственный
     groups = models.ForeignKey(CustomGroup, related_name='groups_aCr', on_delete=models.DO_NOTHING,
                                verbose_name="Подразделения")  # Подразделения
 
     history = HistoricalRecords()
+    
     @property
     def _history_user(self):
         return self.changed_by
@@ -55,7 +56,7 @@ class TicketBD(AbstractTicketBD):
     def _history_user(self, value):
         self.changed_by = value
 
-class ticketChat(models.Model):
+class TicketChat(models.Model):
     post = models.ForeignKey(TicketBD, related_name='chat', on_delete=models.CASCADE, db_column='pk', blank=False)
     name = models.ForeignKey(CustomUser, related_name='userCreated', on_delete=models.DO_NOTHING, db_column='username')
     body = models.TextField()

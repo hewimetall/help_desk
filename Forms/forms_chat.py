@@ -77,18 +77,18 @@ class GetTicketForm(CrispyModelFormMixim, forms.Form):
 
 
 
-class TicketChat(object):
+class TicketChatForm(object):
 
     def __init__(self):
         self.form_autor= AutorsTicketChatForm
         self.form_maneger= ManegerTicketChatForm
         self.form_new_form= GetTicketForm
 
-    def get_form(self, name: str) -> TicketChatForm:
-        if name == "maneger":
+    def get_form(self, role: str) -> TicketChatForm:
+        if role == "maneger":
             return self.form_maneger
-        if name == "autor":
+        if role == "autor":
             return self.form_autor
-        if name == "anon":
+        if role == "anon":
             return self.form_new_form
         

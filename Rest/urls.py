@@ -17,4 +17,11 @@ from django.contrib import admin
 from django.urls import path,include
 
 urlpatterns = [
+
+    # re_path('^chat/(?P<pk>\d+)/restU/$',
+    #         RestChatUpdate.as_view(), name='chat_user_update'),
+    # re_path('^chat/(?P<pk>\d+)/rest/$',
+    #         ChatUserList.as_view(), name='chat_user_list'),
+    # re_path(r'^chat/(?P<pk>\d+)/$', TicketChatsView.as_view(),
+    #         name='ticket_chats_view'),
 ]

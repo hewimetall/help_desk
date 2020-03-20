@@ -28,15 +28,23 @@
                   </div> -->
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Статус заявки: {{ ticket.getStatus }}</li>
-                    <li class="list-group-item">Приоритет:{{ ticket.getPriority }}</li>
                     <li class="list-group-item">Департамент:{{ ticket.groups }}</li>
                     <li class="list-group-item">Дата создания:{{ ticket.data_created }}</li>
                 </ul>
                 <hr class="my-4">
-                <a class="btn btn-outline-primary btn-block" href="{% url 'ticketForm_update' ticket.pk %}"
+
+                {% if is_role == 'manager' %}
+                <a class="btn btn-outline-primary btn-block" href="{% url 'ticket_form_update' ticket.pk %}"
                 role="button">Изменить заявку</a>
-                <a class="btn btn-outline-primary btn-block" href="{% url 'ticketChatsView' ticket.pk %}"
+                <a class="btn btn-outline-primary btn-block" href="{% url 'ticket_chats_view' ticket.pk %}"
                 role="button">Чат</a>
+                {% elif is_role == "autor" %}
+                <a class="btn btn-outline-primary btn-block" href="{% url 'ticket_chats_view' ticket.pk %}"
+                role="button">Чат</a>
+                {% else %}
+                    {% crispy forms_anon %}
+                {% endif %}
+
             </div>
     </div>
     {% endblock %}

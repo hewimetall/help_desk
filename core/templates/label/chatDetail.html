@@ -22,7 +22,7 @@
                 </div>
             </div>
             <hr>
-            <form id="form_app" @submit="formSubmit" action="{% url 'ChatUserUpdate' chat.pk %}" method="post">
+            <form id="form_app" @submit="formSubmit" action="{% url 'chat_user_update' chat.pk %}" method="post">
                 {% crispy form  %}
             </form>
             </div>
