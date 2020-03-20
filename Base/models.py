@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser,Group
 from django.utils.translation import gettext_lazy as _
 from .ticket import AbstractTicketBD
 from .ticker_meneger import TicketBDManeger
+from simple_history.models import HistoricalRecords
 
 # Create your models here.
 #Model user +
@@ -11,7 +12,7 @@ from .ticker_meneger import TicketBDManeger
 #model group +
 #      name username_id is_active
 #model ticker +
-#      title content status  is_active autor manager data_created data_modifite
+#      title content status  is_active autor manager data_created data_modifite ,histori
 #model chatTicker 
 #      post name body data_created data_modifite
 
@@ -42,12 +43,17 @@ class TicketBD(AbstractTicketBD):
                                verbose_name="Автор обращения")  # Автор обращения
     maneger = models.ForeignKey(CustomUser, related_name='manager_aCr', on_delete=models.DO_NOTHING, blank=True,
                                 null=True, verbose_name="Ответственный")  # Ответственный
-    groups = models.ForeignKey(CustomGroup, related_name='manager_aCr', on_delete=models.DO_NOTHING,
+    groups = models.ForeignKey(CustomGroup, related_name='groups_aCr', on_delete=models.DO_NOTHING,
                                verbose_name="Подразделения")  # Подразделения
 
-    class Meta:
-        pass
+    history = HistoricalRecords()
+    @property
+    def _history_user(self):
+        return self.changed_by
 
+    @_history_user.setter
+    def _history_user(self, value):
+        self.changed_by = value
 
 class ticketChat(models.Model):
     post = models.ForeignKey(TicketBD, related_name='chat', on_delete=models.CASCADE, db_column='pk', blank=False)

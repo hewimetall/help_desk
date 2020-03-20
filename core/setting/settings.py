@@ -25,6 +25,8 @@ INSTALLED_APPS = [
     
     # other add apps
     'crispy_forms',
+        'simple_history',
+
     #my_apps
     'Base',
     'Forms',
@@ -34,6 +36,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'simple_history.middleware.HistoryRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
