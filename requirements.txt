@@ -1,7 +1,14 @@
-Django>=3.0,<3.1
-django-crispy-forms==1.8.1
+asgiref==3.2.5
+astroid==2.3.3
+Django==3.0.4
 django-cleanup==4.0.0
-
-# django-extensions==2.2.6
-# pygraphviz==1.5 for make diogramm 
-# psycopg2-binary 
+django-crispy-forms==1.8.1
+django-simple-history==2.8.0
+isort==4.3.21
+lazy-object-proxy==1.4.3
+mccabe==0.6.1
+pylint==2.4.4
+pytz==2019.3
+six==1.14.0
+sqlparse==0.3.1
+wrapt==1.11.2

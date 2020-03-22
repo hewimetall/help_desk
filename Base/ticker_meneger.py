@@ -44,13 +44,13 @@ class TicketBDManeger(models.Manager):
         return list(q)
 
     def get_article_user_maneger(self, user):
-        q = self.filter(maneger=user).exclude(status=self.model.STATUS[-1][0])
+        q = self.filter(maneger=user)
         return list(q)
 
     def get_group_article(self, user):
         gr = user.groups.all()
         q = self.filter(groups__in=gr).filter(maneger=None)
-        Q = set(q) - set(self.get_end_task(q))
+        Q = set(q) -set(self.get_article_user_autor(user)) - set(self.get_end_task(q))
         return list(Q)
 
     def get_end_task(self, Q):

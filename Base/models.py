@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from .ticket import AbstractTicketBD
 from .ticker_meneger import TicketBDManeger
 from simple_history.models import HistoricalRecords
+import datetime
 
 # Create your models here.
 #Model user +
@@ -45,7 +46,8 @@ class TicketBD(AbstractTicketBD):
                                 null=True, verbose_name="Ответственный")  # Ответственный
     groups = models.ForeignKey(CustomGroup, related_name='groups_aCr', on_delete=models.DO_NOTHING,
                                verbose_name="Подразделения")  # Подразделения
-
+    created_t = models.DateTimeField(auto_now_add=True)
+ 
     history = HistoricalRecords()
     
     @property
@@ -55,6 +57,10 @@ class TicketBD(AbstractTicketBD):
     @_history_user.setter
     def _history_user(self, value):
         self.changed_by = value
+
+    class Meta:
+        ordering = ('created_t',)
+
 
 class TicketChat(models.Model):
     post = models.ForeignKey(TicketBD, related_name='chat', on_delete=models.CASCADE, db_column='pk', blank=False)

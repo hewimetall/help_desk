@@ -2,16 +2,19 @@ from django.http.response import Http404, HttpResponse
 from django.views.generic import View
 from Base.models import TicketBD ,TicketChat 
 from Forms.forms_chat import TicketChatForm
+from django.http import JsonResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.serializers import serialize
 
 # Create your views here.
-class RestChatUpdate(View):
+class RestChatUpdate(LoginRequiredMixin,View):
     http_method_names = ['get', 'post', ]
     model = TicketBD
     model2 = TicketChat
     form = TicketChatForm()
 
-    def get():
-        return Http404("error")
+    def get(self,request,**kwarg):
+        return Http404("Page not faund")
 
     def post(self, request, *args, **kwargs):
         # get form +
@@ -24,7 +27,7 @@ class RestChatUpdate(View):
         form = self.get_form(pk=obj.pk, user=self.request.user)
         # print("test 2") +
         data = self.valid_form_try(form)
-        if hasattr(data,"body"):
+        if not hasattr(data,"body"):
             self.push_a()
         # print("test 3") +
         self.save(data["status"], data["body"], data["name"], data["file"])
@@ -33,7 +36,7 @@ class RestChatUpdate(View):
 
     def get_form(self, pk, user):
         role = self.model.objects.get_role(user=user, pk=pk)
-        form = self.form.get_form(name=role)
+        form = self.form.get_form(role)
         return form
 
     def get_object(self):
@@ -69,3 +72,43 @@ class RestChatUpdate(View):
             q2 = self.model2(post=self.get_object(),
                              name=name, body=body, file=file)
             q2.save()
+
+class ChatUserList(LoginRequiredMixin,View):
+    http_method_names = ['get', ]
+    field             = ['name','body','updated']
+    def get(self, request, *args, **kwargs):
+        q=self.get_queryset()
+        resp=[]
+        for i in q:
+            d={}
+            for j in self.field:
+                if j == "name":
+                    d[j] = getattr(i,j).username   
+                elif j == "updated":
+                    data = getattr(i,j)
+                    d[j] = "{}".format(data)       
+                else: 
+                    d[j] = getattr(i,j)
+            resp.append(d)
+        return JsonResponse(resp, safe=False)
+
+    def get_queryset(self):
+        if 'pk' in self.kwargs:
+            pk = self.kwargs['pk']
+            try:
+                tic = TicketBD.objects.vireficate_art(
+                    user=self.request.user, pk=pk)
+                q = TicketChat.objects.filter(post=tic)
+                return q
+            except TicketBD.DoesNotExist:
+                return TicketChat.objects.none()
+            return TicketChat.objects.all()
+
+
+class DetailTicket(LoginRequiredMixin,View):
+    http_method_names = ['get', ]
+    field             = ['name','body','updated']
+    def get(self, request, *args, **kwargs):
+        q=TicketBD.object.vireficate_art(request.user,kwargs['pk'])
+        js=serialize("json",q)
+        return JsonResponse(js, safe=False)

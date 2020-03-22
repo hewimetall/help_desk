@@ -5,19 +5,26 @@ from django.views.generic.edit import ProcessFormView
 from django.views.generic.detail import DetailView
 from Base.models import TicketBD
 from Forms.form_ticket import get_form_ticket_bd ,TicketBDFormCreate
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .view import MiximV
+from django.urls import reverse
+from django.shortcuts import redirect
+
 
 class TicketUpdateView(MiximV, UpdateView):
     model = TicketBD
     template_name = "label/htmlForm/FormTicket.html"
     # fields = ['title', 'content', 'priority', 'groups', ]
-    success_url = "/"
     title = "Изменения заявки"
 
     def get_form_class(self):
         role = self.model.objects.get_role(self.request.user,self.get_object().pk)
         form = get_form_ticket_bd(role)
         return form
+
+    def form_valid(self, form):
+        employee = form.save()  # save form
+        return redirect('ticket_detail', pk=self.get_object().pk)
 
 class TicketCreateView(MiximV, CreateView):
     model = TicketBD

@@ -32,17 +32,31 @@
                     <li class="list-group-item">Дата создания:{{ ticket.data_created }}</li>
                 </ul>
                 <hr class="my-4">
+                {% if ticket.getStatus == 'Отправленно на доработку' and is_role == "autor"  %}
+                                      <div class="alert alert-info" role="alert">
+                        Ваша заявка отправленна на доработку. Пожалуста измените содержания по коментариям в чате.
+                      </div>
+                <a class="btn btn-outline-primary btn-block" href="{% url 'ticket_form_update' ticket.pk %}"
+                role="button">Изменить заявку</a>
+                {% endif %}
 
-                {% if is_role == 'manager' %}
+                {% if ticket.getStatus == "Закрыта" %}
+                  <div class="alert alert-info" role="alert">
+                        Заявка закрыта
+                  </div>
+                {% elif is_role == 'autor' %}
+                <a class="btn btn-outline-primary btn-block" href="{% url 'ticket_chats_view' ticket.pk %}"
+                role="button">Чат</a>
+                
+                {% elif is_role == 'maneger' %}
                 <a class="btn btn-outline-primary btn-block" href="{% url 'ticket_form_update' ticket.pk %}"
                 role="button">Изменить заявку</a>
                 <a class="btn btn-outline-primary btn-block" href="{% url 'ticket_chats_view' ticket.pk %}"
                 role="button">Чат</a>
-                {% elif is_role == "autor" %}
-                <a class="btn btn-outline-primary btn-block" href="{% url 'ticket_chats_view' ticket.pk %}"
-                role="button">Чат</a>
                 {% else %}
-                    {% crispy forms_anon %}
+              <form id="form_app" action="{% url 'chat_user_update' ticket.pk %}" method="post">
+                  {% crispy form_anon  %}
+              </form>
                 {% endif %}
 
             </div>
@@ -50,4 +64,25 @@
     {% endblock %}
 
     {% block contentJs %}
+    <script>
+    function getCookie(name) {
+  let matches = document.cookie.match(new RegExp(
+    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+  ));
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+};
+
+    form_app.onsubmit = async (e) => {
+    e.preventDefault();
+    let response = await fetch('{% url 'chat_user_update' ticket.pk %}', {
+      method: 'POST',
+      body: new FormData(form_app),
+      headers: {
+          'x-xsrf-token': getCookie('csrftoken'),
+        },
+    });
+    document.location.reload(true);
+  };
+</script>
+
     {% endblock %}

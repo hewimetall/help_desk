@@ -5,6 +5,7 @@ app_v = new Vue({
       info: null,
       testinfo: null,
       timer: null,
+      forms:null,
     };
   },
   mounted() {
@@ -14,14 +15,20 @@ app_v = new Vue({
   methods: {
     formSubmit(e){
         const form = e.target;
+        forms = new FormData(form);
         fetch(form.action, {
           method: form.method,
-          body: new FormData(form)
+          body: forms
         })
+        this.forms = forms;
+        if (forms.has('is_move_ticket_end')  || forms.has('is_move_ticket_back') ) {
+          document.location.reload(true);
+        }
       e.preventDefault();
     },
     updateT() {
-      axios.get(document.location['href'] + "rest/", {
+      id =window.location.pathname.split("/")[2];
+      axios.get("/rest/chat_list/"+id  ,{
         headers: {
           'x-xsrf-token': this.getCookie('csrftoken'),
         },
@@ -45,7 +52,7 @@ Vue.component('chat-messenge', {
                         <div class="media-body p-3">
                             <div class="row">
                                 <h5 class="media-heading">{{ m.name }}</h5>
-                                <small class="pull-left time"><i class="fa fa-clock-o"></i> {{ m.created }}</small>
+                                <small class="pull-left time"><i class="fa fa-clock-o"></i> {{ m.updated }}</small>
                             </div>
                             <div class="alert-dark p-3">
                                 <div class="col-12 col-sm-6 col-md-8"><small class="col-sm-11"> {{ m.body }} </small>

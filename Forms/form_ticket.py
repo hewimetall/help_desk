@@ -6,13 +6,20 @@ from crispy_forms.layout import  Submit
 
 class TicketBDFormCreate(CrispyModelFormMixim, forms.ModelForm):
     "('title', 'content','groups', 'File','priority')"
-    groups = forms.ModelChoiceField(queryset=CustomGroup.objects.filter(is_visible=True),
-                                    label="Департаменты")
+
     class Meta:
         model = TicketBD
         fields = ['title', 'content',  'groups', ]
     
 class UserTicketBDFormUpdate(CrispyModelFormMixim, forms.ModelForm):
+
+    def save(self, commit=True):
+        m = super(UserTicketBDFormUpdate, self).save(commit=False)
+        if commit:
+            m.status = 0
+            m.save()
+        return m
+        
     class Meta:
         model = TicketBD
         fields = ['title', 'content',  'groups', ]
@@ -20,7 +27,7 @@ class UserTicketBDFormUpdate(CrispyModelFormMixim, forms.ModelForm):
 class ManegerTicketBDFormUpdate(CrispyModelFormMixim, forms.ModelForm):
     class Meta:
         model = TicketBD
-        fields = [ 'groups', 'maneger','status']
+        fields = [ 'groups', 'maneger',]
 
 class AnonTicketBDFormUpdate(CrispyModelFormMixim, forms.ModelForm):
     def setting(self):
@@ -32,7 +39,7 @@ class AnonTicketBDFormUpdate(CrispyModelFormMixim, forms.ModelForm):
 
 
 def get_form_ticket_bd(role):
-    if role == "manager":
+    if role == "maneger":
         return ManegerTicketBDFormUpdate
     if role == "autor":
         return UserTicketBDFormUpdate 

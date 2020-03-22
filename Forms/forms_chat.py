@@ -73,7 +73,7 @@ class GetTicketForm(CrispyModelFormMixim, forms.Form):
         self.helper.add_input(Submit('принять заявку', 'Принять заявку'))
 
     def getSTATUS(self, form_clear_data):
-        raise ValueError
+        return 2 # in Vork
 
 
 
