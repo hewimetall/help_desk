@@ -24,7 +24,7 @@ urlpatterns = [
     path('rest/', include('Rest.urls')),
     path('', include('Views.urls'))
 ]
-print(settings.DEBUG,bool(settings.DEBUG))
+
 if bool(settings.DEBUG):
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

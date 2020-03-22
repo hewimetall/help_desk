@@ -101,3 +101,4 @@ dmypy.json
 # Docker file
 .docker-compose.yml
 .dockerfile
+Docs/

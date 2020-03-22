@@ -18,6 +18,7 @@ COPY . /code/
 #setting django
 RUN python manage.py makemigrations 
 RUN python manage.py migrate
+RUN python manage.py createmigrateldd -f user.json
 RUN python manage.py collectstatic --no-input --clear
 RUN python manage.py createsuperuser --noinput  --username ${DJANGO_SUPERUSER_USERNAME} --email ${DJANGO_SUPERUSER_EMAIL} 
 RUN bash -c ls
