@@ -42,7 +42,7 @@ class Login(LoginView):
         elif self.request.user.is_superuser:
             return reverse("admin:index")
         else:
-            return reverse("dashBourdPage")
+            return reverse("dash_bourd_page")
 
 class Logout(LogoutView):
     template_name = "login/autch/logout.html"

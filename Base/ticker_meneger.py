@@ -8,13 +8,13 @@ class TicketBDManeger(models.Manager):
         q = self.vireficate_art(user, pk)
         if q == None:
             return False
-        return q.autors == user
+        return "autor"
 
     def is_maneger(self, user, pk) -> bool:
         q = self.vireficate_art(user, pk)
         if q == None:
             return False
-        return q.maneger == user
+        return "maneger"
 
     def get_role(self, user, pk) -> str:
         """ get  3 role autor ,maneger , none"""
@@ -37,7 +37,8 @@ class TicketBDManeger(models.Manager):
         if q2 in q:
             return q2
         else:
-            raise ValueError
+            return None
+        # return self.get(pk=pk)
 
     def get_article_user_autor(self, user):
         q = self.filter(autors=user)

@@ -83,7 +83,10 @@ class ChatUserList(LoginRequiredMixin,View):
             d={}
             for j in self.field:
                 if j == "name":
-                    d[j] = getattr(i,j).username   
+                    name = getattr(i,j).full_name
+                    if len(name) == 0 :
+                        name = getattr(i,j).username 
+                    d[j] = name   
                 elif j == "updated":
                     data = getattr(i,j)
                     d[j] = "{}".format(data)       
@@ -95,13 +98,8 @@ class ChatUserList(LoginRequiredMixin,View):
     def get_queryset(self):
         if 'pk' in self.kwargs:
             pk = self.kwargs['pk']
-            try:
-                tic = TicketBD.objects.vireficate_art(
-                    user=self.request.user, pk=pk)
-                q = TicketChat.objects.filter(post=tic)
-                return q
-            except TicketBD.DoesNotExist:
-                return TicketChat.objects.none()
+            tic = TicketBD.objects.filter(pk=pk)
+            q = TicketChat.objects.filter(post=tic)
             return TicketChat.objects.all()
 
 

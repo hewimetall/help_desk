@@ -13,6 +13,12 @@ class TicketDetail(MiximV, DetailView,):
     context_object_name = 'ticket'
     title = "Имформация о заявке"
 
+    def get_object(self, queryset=None):
+        obj = super(DetailView,self).get_object()
+        if self.model.objects.vireficate_art(self.request.user,obj.pk) == None:
+            raise Http404('Вы не принадлижите этой группе;)')
+        return obj
+
     def get_context_data(self, **kwargs):
         context             = super().get_context_data(**kwargs)
         context['is_role']  = self.model.objects.get_role(self.request.user,self.get_object().pk)

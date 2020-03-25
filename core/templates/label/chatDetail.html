@@ -22,14 +22,15 @@
                 </div>
             </div>
             <hr>
-            {% comment %} <div class="alert alert-light" role="alert">
+             {% comment %} <div class="alert alert-light" role="alert">
                 Состояния заявки: {{ state|lower }}. <br/>
-            </div> {% endcomment %}
+            </div>  {% endcomment %}
             {% if state == 'Закрыта'  %}
             <div class="alert alert-info" role="alert">
                         Заявка закрыта
             </div>
-            {% elif state == 'В работе' %}
+            {% elif role == 'anon' %}
+            {% elif state == 'В работе'  %}
             <form id="form_app" @submit="formSubmit" action="{% url 'chat_user_update' chat.pk %}" method="post">
                 {% crispy form  %}
             </form>
