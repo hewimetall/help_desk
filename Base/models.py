@@ -45,7 +45,7 @@ class TicketBD(AbstractTicketBD):
     maneger = models.ForeignKey(CustomUser, related_name='manager_aCr', on_delete=models.DO_NOTHING, blank=True,
                                 null=True, verbose_name="Ответственный")  # Ответственный
     groups = models.ForeignKey(CustomGroup, related_name='groups_aCr', on_delete=models.DO_NOTHING,
-                               verbose_name="Подразделения")  # Подразделения
+                               verbose_name="Отдел")  # Подразделения
     created_t = models.DateTimeField(auto_now_add=True)
  
     history = HistoricalRecords()

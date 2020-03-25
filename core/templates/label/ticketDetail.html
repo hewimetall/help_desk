@@ -28,8 +28,8 @@
                   </div> -->
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Статус заявки: {{ ticket.getStatus }}</li>
-                    <li class="list-group-item">Департамент:{{ ticket.groups }}</li>
-                    <li class="list-group-item">Дата создания:{{ ticket.data_created }}</li>
+                    <li class="list-group-item">Отдел: {{ ticket.groups }}</li>
+                    <li class="list-group-item">Дата создания: {{ ticket.data_created }}</li>
                 </ul>
                 <hr class="my-4">
                 {% if ticket.getStatus == 'Отправленно на доработку' and is_role == "autor"  %}

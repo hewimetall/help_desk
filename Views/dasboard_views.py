@@ -20,23 +20,23 @@ class AbstractDashBourd(LoginRequiredMixin, ListView):
         context['title']=self.title
         return context
 
-class HubDashbourd(AbstractDashBourd):
-    alert_str = "Групповые заявки."
-
-    def get_queryset(self):
-        q = self.model.objects.get_group_article(self.request.user)
-        return q
-
 class AvtorDashbourd(AbstractDashBourd):
-    alert_str="Созданные заявки пользователя."
+    alert_str="Созданные заявки"
 
     def get_queryset(self):
         q = self.model.objects.get_article_user_autor(self.request.user)
         return q
 
 class MenegerDashbourd(AbstractDashBourd):
-    alert_str="Заявки под управлениям пользователя."
+    alert_str="Заявки для исполнения"
 
     def get_queryset(self):
         q = self.model.objects.get_article_user_maneger(self.request.user)
+        return q
+
+class HubDashbourd(AbstractDashBourd):
+    alert_str = "Не распределёные заявки отдела"
+
+    def get_queryset(self):
+        q = self.model.objects.get_group_article(self.request.user)
         return q
