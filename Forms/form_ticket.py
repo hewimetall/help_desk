@@ -27,7 +27,16 @@ class UserTicketBDFormUpdate(CrispyModelFormMixim, forms.ModelForm):
 class ManegerTicketBDFormUpdate(CrispyModelFormMixim, forms.ModelForm):
     class Meta:
         model = TicketBD
-        fields = [ 'groups', 'maneger',]
+        fields = [ 'groups', ]
+
+
+    def save(self, commit=True):
+        m = super(ManegerTicketBDFormUpdate, self).save(commit=False)
+        if commit:
+            m.status = 0
+            m.menager = None
+            m.save()
+        return m
 
 class AnonTicketBDFormUpdate(CrispyModelFormMixim, forms.ModelForm):
     def setting(self):

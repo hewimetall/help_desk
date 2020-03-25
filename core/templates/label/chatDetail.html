@@ -22,11 +22,11 @@
                 </div>
             </div>
             <hr>
-              <div class="alert alert-light" role="alert">
+              {% comment %} <div class="alert alert-light" role="alert">
                 Состояния заявки: {{ state|lower }}. 
                 
                 <p> Роль: {{ role }} </p>
-            </div>  
+            </div>   {% endcomment %}
 
             {% if state == 'Закрыта'  %}
             <div class="alert alert-info" role="alert">

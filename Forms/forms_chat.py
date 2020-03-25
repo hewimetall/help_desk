@@ -32,7 +32,7 @@ class ManegerTicketChatForm(TicketChatForm):
     is_move_ticket_back = forms.BooleanField(
         label="Отправить на доработку", required=False)
     is_move_ticket_end = forms.BooleanField(
-        label="Выполнено тикет", required=False)
+        label="Выполнено заявку", required=False)
 
     def getSTATUS(self, form_clear_data):
         if form_clear_data['is_move_ticket_end'] and form_clear_data['is_move_ticket_back']:
@@ -48,15 +48,15 @@ class ManegerTicketChatForm(TicketChatForm):
 
 class AutorsTicketChatForm(TicketChatForm):
     is_move_ticket_end = forms.BooleanField(
-        label="Закрыть тикет", required=False)
+        label="Закрыть заявку", required=False)
     is_move_ticket_back = forms.BooleanField(
-        label="Отправить на обработку", required=False)
+        label="Вернуть в работу", required=False)
 
     def getSTATUS(self, form_clear_data):
         if form_clear_data['is_move_ticket_end'] and form_clear_data['is_move_ticket_back']:
             return None
         if form_clear_data['is_move_ticket_back']:
-            return TicketBD.STATUS[1][0]
+            return TicketBD.STATUS[2][0]
         if form_clear_data['is_move_ticket_end']:
             return TicketBD.STATUS[4][0]
         if "body" in form_clear_data:

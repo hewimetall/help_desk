@@ -49,8 +49,6 @@
                 role="button">Чат</a>
                 
                 {% elif is_role == 'maneger' %}
-                <a class="btn btn-outline-primary btn-block" href="{% url 'ticket_form_update' ticket.pk %}"
-                role="button">Изменить заявку</a>
                 <a class="btn btn-outline-primary btn-block" href="{% url 'ticket_chats_view' ticket.pk %}"
                 role="button">Чат</a>
                 {% else %}
