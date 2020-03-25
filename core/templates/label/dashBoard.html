@@ -34,8 +34,8 @@
                     {{ i.pk }}
                 </td>
                 <td>{{ i.title }}</td>
-                <td>{{ i.autors }}</td>
-                <td>{{ i.maneger }}</td>
+                <td>{{ i.autors.full_name }}</td>
+                <td>{{ i.maneger.full_name }}</td>
                 <td>{{ i.getStatus }}</td>
                 <td><a href="{% url 'ticket_detail' i.pk %}">Перейти</a></td>
             </tr>
