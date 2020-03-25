@@ -100,7 +100,7 @@ class ChatUserList(LoginRequiredMixin,View):
         if 'pk' in self.kwargs:
             pk = self.kwargs['pk']
             tic = TicketBD.objects.filter(pk=pk)
-            q = TicketChat.objects.filter(post=tic)
+            q = TicketChat.objects.filter(post=tic).order_by("update") 
             return TicketChat.objects.all()
 
 
