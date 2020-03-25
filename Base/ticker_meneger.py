@@ -6,15 +6,19 @@ class TicketBDManeger(models.Manager):
 
     def is_autors(self, user, pk) -> bool:
         q = self.vireficate_art(user, pk)
-        if q == None:
+        if q.autors == None:
             return False
-        return "autor"
+        if q.autors.username == user.username: 
+            return "autor"
+        return False
 
     def is_maneger(self, user, pk) -> bool:
         q = self.vireficate_art(user, pk)
-        if q == None:
+        if q.maneger == None :
             return False
-        return "maneger"
+        if q.maneger.username == user.username: 
+            return "maneger"
+        return False
 
     def get_role(self, user, pk) -> str:
         """ get  3 role autor ,maneger , none"""

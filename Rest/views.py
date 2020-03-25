@@ -27,10 +27,10 @@ class RestChatUpdate(LoginRequiredMixin,View):
         form = self.get_form(pk=obj.pk, user=self.request.user)
         # print("test 2") +
         data = self.valid_form_try(form)
-        if not hasattr(data,"body"):
+        try:
+            self.save(data["status"], data["body"], data["name"], data["file"])
+        except KeyError:
             self.push_a()
-        # print("test 3") +
-        self.save(data["status"], data["body"], data["name"], data["file"])
         # print("test 4") +
         return HttpResponse("ok")
 
@@ -60,6 +60,7 @@ class RestChatUpdate(LoginRequiredMixin,View):
     def push_a(self):
             q = self.get_object()
             q.maneger = self.request.user
+            q.status = 2
             q.save()
 
 

@@ -22,18 +22,28 @@
                 </div>
             </div>
             <hr>
-             {% comment %} <div class="alert alert-light" role="alert">
-                Состояния заявки: {{ state|lower }}. <br/>
-            </div>  {% endcomment %}
+              <div class="alert alert-light" role="alert">
+                Состояния заявки: {{ state|lower }}. 
+                
+                <p> Роль: {{ role }} </p>
+            </div>  
+
             {% if state == 'Закрыта'  %}
             <div class="alert alert-info" role="alert">
                         Заявка закрыта
             </div>
-            {% elif role == 'anon' %}
+            {% elif role == 'anon' %} 
+            {% comment %} None {% endcomment %}
+
             {% elif state == 'В работе'  %}
             <form id="form_app" @submit="formSubmit" action="{% url 'chat_user_update' chat.pk %}" method="post">
                 {% crispy form  %}
             </form>
+            {% elif state == 'Выполнена' and role == 'maneger' %}
+             
+            <div class="alert alert-info" role="alert">
+                        В данный момент заявка Выполнена.
+            </div>
             {% elif state == 'Выполнена' and role == 'autor' %}
             <form id="form_app" @submit="formSubmit" action="{% url 'chat_user_update' chat.pk %}" method="post">
                 {% crispy form  %}
@@ -47,9 +57,6 @@
             <form id="form_app" @submit="formSubmit" action="{% url 'chat_user_update' chat.pk %}" method="post">
                 {% crispy form  %}
             </form>
-            
-            {% elif  state == 'В обработке' and role == 'anon' %} 
-            {% comment %} None {% endcomment %}
             {% endif %}
             </div>
     </div>
